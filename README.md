@@ -87,5 +87,7 @@ Start the server
 ![Architecture](./screenshots/2.png)
 
 
-<!-- ## Demo -->
+## Demo 
+
+https://github.com/Anurag-Deo/Nutrivision-Frontend/assets/92918449/7912528d-5283-4326-b0dd-bc01f7423ca0
 
