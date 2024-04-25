@@ -24,6 +24,89 @@ export default function Home() {
         setSelectedImage(event.target.files[0]);
     };
 
+    const indianDishes = new Map([
+        ["adhirasam", "Adhirasam"],
+        ["aloo_gobi", "Aloo Gobi"],
+        ["aloo_matar", "Aloo Matar"],
+        ["aloo_methi", "Aloo Methi"],
+        ["aloo_shimla_mirch", "Aloo Shimla Mirch"],
+        ["aloo_tikki", "Aloo Tikki"],
+        ["anarsa", "Anarsa"],
+        ["ariselu", "Ariselu"],
+        ["bandar_laddu", "Bandar Laddu"],
+        ["basundi", "Basundi"],
+        ["bhatura", "Bhatura"],
+        ["bhindi_masala", "Bhindi Masala"],
+        ["biryani", "Biryani"],
+        ["boondi", "Boondi"],
+        ["butter_chicken", "Butter Chicken"],
+        ["chak_hao_kheer", "Chak Hao Kheer"],
+        ["cham_cham", "Cham Cham"],
+        ["chana_masala", "Chana Masala"],
+        ["chapati", "Chapati"],
+        ["chhena_kheeri", "Chhena Kheeri"],
+        ["chicken_razala", "Chicken Razala"],
+        ["chicken_tikka", "Chicken Tikka"],
+        ["chicken_tikka_masala", "Chicken Tikka Masala"],
+        ["chikki", "Chikki"],
+        ["daal_baati_churma", "Daal Baati Churma"],
+        ["daal_puri", "Daal Puri"],
+        ["dal_makhani", "Dal Makhani"],
+        ["dal_tadka", "Dal Tadka"],
+        ["dharwad_pedha", "Dharwad Pedha"],
+        ["doodhpak", "Doodhpak"],
+        ["double_ka_meetha", "Double Ka Meetha"],
+        ["dum_aloo", "Dum Aloo"],
+        ["gajar_ka_halwa", "Gajar Ka Halwa"],
+        ["gavvalu", "Gavvalu"],
+        ["ghevar", "Ghevar"],
+        ["gulab_jamun", "Gulab Jamun"],
+        ["imarti", "Imarti"],
+        ["jalebi", "Jalebi"],
+        ["kachori", "Kachori"],
+        ["kadai_paneer", "Kadai Paneer"],
+        ["kadhi_pakoda", "Kadhi Pakoda"],
+        ["kajjikaya", "Kajjikaya"],
+        ["kakinada_khaja", "Kakinada Khaja"],
+        ["kalakand", "Kalakand"],
+        ["karela_bharta", "Karela Bharta"],
+        ["kofta", "Kofta"],
+        ["kuzhi_paniyaram", "Kuzhi Paniyaram"],
+        ["lassi", "Lassi"],
+        ["ledikeni", "Ledikeni"],
+        ["litti_chokha", "Litti Chokha"],
+        ["lyangcha", "Lyangcha"],
+        ["maach_jhol", "Maach Jhol"],
+        ["makki_di_roti_sarson_da_saag", "Makki Di Roti Sarson Da Saag"],
+        ["malapua", "Malapua"],
+        ["misi_roti", "Misi Roti"],
+        ["misti_doi", "Misti Doi"],
+        ["modak", "Modak"],
+        ["mysore_pak", "Mysore Pak"],
+        ["naan", "Naan"],
+        ["navrattan_korma", "Navrattan Korma"],
+        ["palak_paneer", "Palak Paneer"],
+        ["paneer_butter_masala", "Paneer Butter Masala"],
+        ["phirni", "Phirni"],
+        ["pithe", "Pithe"],
+        ["poha", "Poha"],
+        ["poornalu", "Poornalu"],
+        ["pootharekulu", "Pootharekulu"],
+        ["qubani_ka_meetha", "Qubani Ka Meetha"],
+        ["rabri", "Rabri"],
+        ["ras_malai", "Ras Malai"],
+        ["rasgulla", "Rasgulla"],
+        ["sandesh", "Sandesh"],
+        ["shankarpali", "Shankarpali"],
+        ["sheer_korma", "Sheer Korma"],
+        ["sheera", "Sheera"],
+        ["shrikhand", "Shrikhand"],
+        ["sohan_halwa", "Sohan Halwa"],
+        ["sohan_papdi", "Sohan Papdi"],
+        ["sutar_feni", "Sutar Feni"],
+        ["unni_appam", "Unni Appam"],
+    ]);
+
     const handleUpload = async () => {
         setDishName([]);
         setNutritionalInfo([]);
@@ -45,12 +128,16 @@ export default function Home() {
                 console.log("response", response);
                 // setDishName(response.data.dish);
                 // Add response to dishName array
-                setDishName((dishName) => [...dishName, response.data.dish]);
+
+                setDishName((dishName) => [
+                    ...dishName,
+                    indianDishes.get(response.data.dish),
+                ]);
                 console.log("formData2");
-                let dishes = response.data.dish;
+                let dishes = indianDishes.get(response.data.dish);
                 // Create a json object to send to the nutritional_info service
                 let bodyContent = JSON.stringify({
-                    dish: "chole",
+                    dish: dishes,
                 });
                 let headersList = {
                     "Content-Type": "application/json",
@@ -232,10 +319,10 @@ export default function Home() {
             {/* {dishName && <p>Dishes Detected: {dishName}</p>} */}
             {/* List all the dishes from dishName with proper styling */}
             <div class="flex flex-col justify-around my-10">
-                {dishName.length && (
+                {dishName.length>0 && (
                     <div class="text-2xl mx-auto mb-5">Dishes Detected</div>
                 )}
-                <div class="flex flex-row justify-around">
+                {dishName.length>0 && (<div class="flex flex-row justify-around">
                     {dishName.map((dish, index) => (
                         <div
                             key={index}
@@ -244,10 +331,10 @@ export default function Home() {
                             <p>{Capitalize(dish)}</p>
                         </div>
                     ))}
-                </div>
+                </div>)}
             </div>
             <div class="overflow-x-auto mx-auto rounded-lg">
-                {nutritionalInfo.length && (
+                {nutritionalInfo.length>0 && (
                     <div class="text-2xl text-center mb-5">
                         Nutritional Information
                     </div>

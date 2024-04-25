@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Nutrivision
 
-First, run the development server:
+The aim of this project is to create a comprehensive image classification and advice generation system which takes the images of food product and estimate the calories in that and then give appropriate amount one should take to maintain his/her diet.
+
+Link to the frontend: [Nutrivision-Backend](https://github.com/Anurag-Deo/Nutrivision-Backend)
+
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/Anurag-Deo/Nutrivision-Frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+  cd Nutrivision-Frontend
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## API Reference used in the project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Get all items
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```http
+  GET :8001/nutritional_info
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `dish` | `string` | **Required**. The dish for which we want the nutritional values to be extracted. |
+
+#### Get item
+
+```http
+  GET :8002/info_gemini/invoke
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `'input':{'dish':dish}`      | `json` | **Required**. Internal call to fetch the data from gemini |
+
+```http
+  GET :8002/info_gpt/invoke
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `'input':{'dish':dish}`      | `json` | **Required**. Internal call to fetch the data from gpt |
+
+
+```http
+  GET :8002/info_claude/invoke
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `'input':{'dish':dish}`      | `json` | **Required**. Internal call to fetch the data from claude |
+
+```http
+  GET :8003/detect
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `file`      | `file` | **Required**. Image of the food item for the classification |
+
+
+## Screenshots
+
+![Architecture](./screenshots/1.png)
+![Architecture](./screenshots/2.png)
+
+
+<!-- ## Demo -->
+
